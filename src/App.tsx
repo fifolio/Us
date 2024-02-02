@@ -1,9 +1,16 @@
-import React from 'react'
+import {useEffect} from 'react';
+import './globals.css';
 
 function App() {
+  useEffect(()=>{
+    document.title = "Be with: Us!"
+  }, [])
+
   return (
-    <div>App</div>
+    <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
   )
 }
 
-export default App
+export default App 
