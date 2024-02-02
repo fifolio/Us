@@ -1,6 +1,8 @@
 // Import the ReactDOM module from the 'react-dom/client' package
 import ReactDOM from 'react-dom/client';
 
+import {BrowserRouter} from 'react-router-dom';
+
 // Import the App component from a file named 'App'
 import App from './App';
 
@@ -14,7 +16,8 @@ const root = ReactDOM.createRoot(rootElement!);
 // Render the App component as the root of the React application
 
 root.render(
-    // The <App /> component is the root component of the application 
+    <BrowserRouter>
     <App />
+    </ BrowserRouter>
 )
 
