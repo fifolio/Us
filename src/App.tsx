@@ -17,8 +17,8 @@ function App() {
 
         <Route element={<AuthLayout />}>
           {/* Public routes */}
-          <Route path='/sign-in' element={<SigninForm />} />
-          <Route path='/sign-up' element={<SignupForm />} />
+          <Route path='/signin' element={<SigninForm />} />
+          <Route path='/signup' element={<SignupForm />} />
         </Route>
 
         <Route element={<RootLayout />}>
