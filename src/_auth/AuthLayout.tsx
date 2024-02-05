@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom';
 
 const AuthLayout: React.FC = () => {
-
-  // Change page title when loaded
-  useEffect(() => {
-    document.title = "Don't hesitate, Join Us!";
-  }, []);
 
   // Set a default value for the Authentication  
   const isAuthenticated = false;

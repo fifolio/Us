@@ -5,11 +5,13 @@ import { Home } from './_root/pages';
 import { SigninForm, SignupForm } from './_auth/forms';
 import AuthLayout from './_auth/AuthLayout';
 import RootLayout from './_root/RootLayout';
+import { Toaster } from '@/components/ui/toaster';
 
 function App() {
   useEffect(() => {
-    document.title = "Be with: Us!"
+    document.title = "Don't hesitate, Join Us!";
   }, [])
+
 
   return (
     <main className='flex h-screen'>
@@ -27,6 +29,8 @@ function App() {
         </Route>
 
       </Routes>
+
+      <Toaster />
     </main>
   )
 }
