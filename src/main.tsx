@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 // Import the App component from a file named 'App'
 import App from './App';
+import AuthProvider from './context/authContext';
+import { QueryProvider } from './lib/react-query/QueryProvider';
 
 // Find the DOM element with the id 'root'
 const rootElement = document.getElementById('root');
@@ -17,7 +19,11 @@ const root = ReactDOM.createRoot(rootElement!);
 
 root.render(
     <BrowserRouter>
-        <App />
+        <QueryProvider>
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+        </QueryProvider>
     </BrowserRouter>
 )
 
