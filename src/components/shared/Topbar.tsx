@@ -28,7 +28,7 @@ const Topbar: React.FC = () => {
             <img src="/assets/icons/logout.svg" alt="logout" />
           </Button>
           <Link to={`/profile/${user.id}`} className='flex-center gap-3'>
-            <img src={user.imageUrl || '/assets/images/profile-placeholder.svg'} className='h-8 w-8 rounded-full' alt='profile' />
+            <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'} className='h-8 w-8 rounded-full' alt='profile' />
           </Link>
         </div>
       </div>

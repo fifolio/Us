@@ -1,4 +1,3 @@
-import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -20,15 +19,21 @@ import { Models } from 'appwrite'
 import { useUserContext } from '@/context/authContext'
 import { useToast } from '../ui/use-toast'
 import { useNavigate } from 'react-router-dom'
-import { useCreatePost } from '@/lib/react-query/queriesAndMutations'
+import { useCreatePost, useUpdatePost } from '@/lib/react-query/queriesAndMutations'
 
 type PostFormProps = {
   post?: Models.Document;
+  action: "Create" | "Update";
 }
 
-const PostForm: React.FC = ({ post }: PostFormProps) => {
+const PostForm = ({ post, action }: PostFormProps) => {
 
-  const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
+
+  const { mutateAsync: createPost, isPending: isLoadingCreate} = useCreatePost();
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate} = useUpdatePost();
+
+
+
   const { user } = useUserContext();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -41,14 +46,29 @@ const PostForm: React.FC = ({ post }: PostFormProps) => {
       file: [],
       location: post ? post.location : "",
       tags: post ? post.tags.join(",") : "",
+    }, 
+  });
 
-
-    },
-  })
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
-    console.log('Console the values: ', values)
+
+    if(post && action === 'Update') {
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl
+      })
+
+      if(!updatedPost) {
+        toast({
+          title: `Please try again.`,
+        });
+      } 
+
+      return navigate(`/posts/${post.$id}`)
+    }
 
     const newPost = await createPost({
       ...values,
@@ -56,10 +76,9 @@ const PostForm: React.FC = ({ post }: PostFormProps) => {
     });
 
     if (!newPost) {
-      console.log('Console newPost: ', values)
-      toast({ title: '⚠ Please try again' })
-    } else {
-      toast({ title: '✅ Successfully Created' })
+      toast({
+        title: `${action} post failed. Please try again.`,
+      });
     }
 
     navigate('/');
@@ -130,7 +149,13 @@ const PostForm: React.FC = ({ post }: PostFormProps) => {
 
         <div className='flex gap-4 items-center justify-end'>
           <Button type="button" className='shad-button_dark_4 py-5'>Cancel</Button>
-          <Button type="submit" className='shad-button_primary whitespace-nowrap py-6 px-10'>Submit</Button>
+          <Button 
+          type="submit" 
+          className='shad-button_primary whitespace-nowrap py-6 px-10'
+          disabled={isLoadingCreate || isLoadingUpdate}
+          >
+            {isLoadingCreate || isLoadingUpdate && 'Loading...'} {action} Post
+          </Button>
         </div>
       </form>
     </Form>
