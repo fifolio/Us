@@ -1,7 +1,22 @@
-import React from 'react'
+import GridPostList from "./GridPostList";
 
-export default function SearchResults() {
+type SearchResultsProps = {
+  isSearchFetching: boolean,
+  searchedPost: any;
+}
+
+export default function SearchResults({ isSearchFetching, searchedPost }: SearchResultsProps) {
+
+  if (isSearchFetching) return 'Loading...';
+
+  if (searchedPost && searchedPost.documents.length > 0) {
+
+    return (
+      <GridPostList posts={searchedPost.documents}/>
+    )
+  }
+
   return (
-    <div>SearchResults</div>
+    <p className="text-light-4 mt-10 text-center w-full">No results found</p>
   )
 }
