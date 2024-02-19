@@ -6,9 +6,10 @@ import { checkIsLiked } from "@/lib/utils";
 type PostStatsProps = {
   post?: Models.Document,
   userId: string,
+  isGrid?: booleanو
 }
 
-export default function PostStats({ post, userId }: PostStatsProps) {
+export default function PostStats({ post, userId, isGrid }: PostStatsProps) {
 
   const likesList = post?.likes.map((user: Models.Document) => user.$id);
 
@@ -60,8 +61,8 @@ export default function PostStats({ post, userId }: PostStatsProps) {
   return (
     <div className="flex justify-between itmes-center z-20">
       <div className="flex gap-2 mr-5">
-        <img src={checkIsLiked(likes, userId) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'} alt="like" width={20} height={20} onClick={handleLikePost} className="cursor-pointer" />
-        <p className="small-medium lg:base-medium">
+        <img src={checkIsLiked(likes, userId) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'} alt="like" width={20} height={20} onClick={handleLikePost} className={`cursor-pointer`} />
+        <p className={`small-medium lg:base-medium ${isGrid && 'text-light-1'}`}>
           {likes.length}
         </p>
       </div>
