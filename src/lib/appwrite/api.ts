@@ -255,7 +255,7 @@ export async function deleteSavePost(savedRecordId: string) {
   }
 }
 
-export async function getPostById(postId: string) {
+export async function getPostById(postId: string | undefined) {
   if (!postId) throw Error;
   try {
     const post = await databases.getDocument(
